@@ -44,21 +44,25 @@ public class MainActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		/*
+		 * Placeholder variables
+		 * TODO create a way to save data to disk
+		 */
 		posts = new ArrayList<Post>();
-		for (int i = 0; i < 30; i++) {
+		for (int i = 0; i < 11; i++) {
 			Post p = new Post();
 			if (i % 2 == 0)
-				p.setTitle("This is " + i);
+				p.setTitle("Fizz " + i);
 			else if (i % 3 == 0)
-				p.setTitle("This as " + i);
+				p.setTitle("Buzz " + i);
 			else
-				p.setTitle("This be " + i);
-			p.setCategory("Category");
-			p.setLocation("Location");
+				p.setTitle("Fizz Buzz " + i);
+			p.setCategory("Awesome");
+			p.setLocation("Seattle, WA");
 			p.setDate(new Date(i * 1000));
-			p.setDescription("Description");
-			p.setPrice(i);
-			// p.setEmail("something@here.com");
+			p.setDescription("Selling, or jobs, or rides or whatever.");
+			p.setPrice(i*10);
+			p.setEmail("john.doe@gmail.com");
 			posts.add(p);
 		}
 		list = (ListView) findViewById(R.id.main_listview);
