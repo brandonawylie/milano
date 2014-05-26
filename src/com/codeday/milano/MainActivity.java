@@ -1,4 +1,4 @@
-package com.example.milano;
+package com.codeday.milano;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -9,6 +9,8 @@ import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
 import java.sql.Date;
 import java.util.ArrayList;
+
+import com.example.milano.R;
 
 import android.app.Activity;
 import android.content.Context;
@@ -85,16 +87,11 @@ public class MainActivity extends ActionBarActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.main_post:
-			// TODO get the email, and open associated app
-			Toast.makeText(MainActivity.this, "create post", Toast.LENGTH_LONG)
-					.show();
 			Intent i = new Intent(getApplicationContext(),
 					CreatePostActivity.class);
 			startActivityForResult(i, CREATE_POST_REQUEST);
 			return true;
 		case R.id.main_favorites:
-			Toast.makeText(MainActivity.this, "Favorites", Toast.LENGTH_LONG)
-					.show();
 			Intent fave = new Intent(getApplicationContext(),
 					FavoritesActivity.class);
 			fave.putExtra("posts", posts);
@@ -143,7 +140,7 @@ public class MainActivity extends ActionBarActivity {
 		}
 	}
 
-	public void writeOutPosts(ArrayList<Post> posts) {
+	public void writeOutPosts() {
 		FileOutputStream fos = null;
 		try {
 			fos = openFileOutput(postsStorageFile, Context.MODE_PRIVATE);
@@ -154,7 +151,7 @@ public class MainActivity extends ActionBarActivity {
 		ObjectOutputStream os = null;
 		try {
 			os = new ObjectOutputStream(fos);
-			os.writeObject(this);
+			os.writeObject(adapter.values);
 			os.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

@@ -16,11 +16,11 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/milano"
         android:label="@string/app_name"
         android:theme="@style/Theme.AppCompat.Light" >
         <activity
-            android:name="com.example.milano.MainActivity"
+            android:name="com.codeday.milano.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -30,19 +30,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.milano.ViewPostActivity"
+            android:name="com.codeday.milano.ViewPostActivity"
             android:label="@string/title_activity_view_post"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light" >
         </activity>
         <activity
-            android:name="com.example.milano.CreatePostActivity"
+            android:name="com.codeday.milano.CreatePostActivity"
             android:label="@string/title_activity_create_post"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light" >
         </activity>
         <activity
-            android:name="com.example.milano.FavoritesActivity"
+            android:name="com.codeday.milano.FavoritesActivity"
             android:label="@string/title_activity_favorites"
             android:theme="@style/Theme.AppCompat.Light" >
         </activity>

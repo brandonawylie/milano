@@ -1,6 +1,8 @@
-package com.example.milano;
+package com.codeday.milano;
 
 import java.util.ArrayList;
+
+import com.example.milano.R;
 
 import android.app.Activity;
 import android.content.Intent;

@@ -1,4 +1,4 @@
-package com.example.milano;
+package com.codeday.milano;
 
 import java.io.Serializable;
 import java.sql.Date;

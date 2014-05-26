@@ -1,7 +1,9 @@
-package com.example.milano;
+package com.codeday.milano;
 
 import java.sql.Date;
 import java.util.ArrayList;
+
+import com.example.milano.R;
 
 import android.app.Activity;
 import android.content.Context;
@@ -83,7 +85,8 @@ public class PostAdapter extends BaseAdapter {
 					date.append("" + diffMinutes + " min ");
 				else
 					date.append("" + diffMinutes + " mins ");
-			}
+			} else
+				date.append("0 min");
 		}
 		
 		

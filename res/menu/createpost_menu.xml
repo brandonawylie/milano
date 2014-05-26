@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
   <menu xmlns:android="http://schemas.android.com/apk/res/android" 
       xmlns:app="http://schemas.android.com/apk/res-auto">
-      <item android:id="@+id/viewpost_reply"
-          android:title="reply"
+      <item android:id="@+id/createpost_submit"
+          android:title="submit"
           app:showAsAction="always|withText"  />
       <!--  android:icon="@drawable/abc_ic_go" -->
          

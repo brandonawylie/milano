@@ -1,4 +1,4 @@
-package com.example.milano;
+package com.codeday.milano;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -25,8 +25,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.DecelerateInterpolator;
@@ -39,7 +43,9 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-public class CreatePostActivity extends Activity {
+import com.example.milano.R;
+
+public class CreatePostActivity extends ActionBarActivity {
 	private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 100;
 	public static final int MEDIA_TYPE_IMAGE = 1;
 
@@ -98,60 +104,67 @@ public class CreatePostActivity extends Activity {
 		Button upload = (Button) findViewById(R.id.createpost_upload);
 		upload.setOnClickListener(ulistener);
 
-		OnClickListener slistener = new OnClickListener() {
+	}
+	
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater mi = getMenuInflater();
+		mi.inflate(R.menu.createpost_menu, menu);
+		return true;
+	}
 
-			public void onClick(View v) {
-				Button b = (Button) v;
-				EditText title = (EditText) findViewById(R.id.createpost_title);
-				EditText location = (EditText) findViewById(R.id.createpost_location);
-				EditText price = (EditText) findViewById(R.id.createpost_price);
-				EditText description = (EditText) findViewById(R.id.createpost_description);
-				EditText email = (EditText) findViewById(R.id.createpost_email);
-				Spinner spinner = (Spinner) findViewById(R.id.createpost_category);
-				Post p = new Post();
-				StringBuilder err = new StringBuilder();
-				if (price.getText().toString().isEmpty()) {
-					err.append("Please enter a price\n");
-				}
-				if (title.getText().toString().isEmpty()) {
-					err.append("Please enter a title\n");
-				}
-				if (location.getText().toString().isEmpty()) {
-					err.append("Please enter a location\n");
-				}
-				if (description.getText().toString().isEmpty()) {
-					err.append("Please enter a description\n");
-				}
-				if (email.getText().toString().isEmpty()) {
-					err.append("Please enter an email\n");
-				}
-				if (spinner.getSelectedItemPosition() == 0) {
-					err.append("Please enter a category\n");
-				}
-				if (err.length() != 0) {
-					Toast.makeText(CreatePostActivity.this, err.substring(0, err.length() - 1), Toast.LENGTH_LONG).show();
-					return;
-				}
-				p.setTitle(title.getText().toString());
-				p.setDescription(description.getText().toString());
-				p.setPrice(Integer.parseInt(price.getText().toString()));
-				p.setLocation(location.getText().toString());
-				p.setEmail(email.getText().toString());
-				java.util.Date date = new java.util.Date();
-				p.setDate(new Date(date.getTime()));
-				p.setCategory(category[spinner.getSelectedItemPosition()]);
-				
-				for (int i = 0; i < fileUris.size(); i++)
-					p.addImage(fileUris.get(i).getPath());
-				Intent resultIntent = new Intent();
-				setResult(Activity.RESULT_OK, resultIntent);
-				resultIntent.putExtra("post", p);
-				finish();
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.createpost_submit:
+			EditText title = (EditText) findViewById(R.id.createpost_title);
+			EditText location = (EditText) findViewById(R.id.createpost_location);
+			EditText price = (EditText) findViewById(R.id.createpost_price);
+			EditText description = (EditText) findViewById(R.id.createpost_description);
+			EditText email = (EditText) findViewById(R.id.createpost_email);
+			Spinner spinner = (Spinner) findViewById(R.id.createpost_category);
+			Post p = new Post();
+			StringBuilder err = new StringBuilder();
+			if (price.getText().toString().isEmpty()) {
+				err.append("Please enter a price\n");
 			}
-		};
-
-		Button submit = (Button) findViewById(R.id.createpost_submit);
-		submit.setOnClickListener(slistener);
+			if (title.getText().toString().isEmpty()) {
+				err.append("Please enter a title\n");
+			}
+			if (location.getText().toString().isEmpty()) {
+				err.append("Please enter a location\n");
+			}
+			if (description.getText().toString().isEmpty()) {
+				err.append("Please enter a description\n");
+			}
+			if (email.getText().toString().isEmpty()) {
+				err.append("Please enter an email\n");
+			}
+			if (spinner.getSelectedItemPosition() == 0) {
+				err.append("Please enter a category\n");
+			}
+			if (err.length() != 0) {
+				Toast.makeText(CreatePostActivity.this, err.substring(0, err.length() - 1), Toast.LENGTH_LONG).show();
+				return super.onOptionsItemSelected(item);
+			}
+			p.setTitle(title.getText().toString());
+			p.setDescription(description.getText().toString());
+			p.setPrice(Integer.parseInt(price.getText().toString()));
+			p.setLocation(location.getText().toString());
+			p.setEmail(email.getText().toString());
+			java.util.Date date = new java.util.Date();
+			p.setDate(new Date(date.getTime()));
+			p.setCategory(category[spinner.getSelectedItemPosition()]);
+			
+			for (int i = 0; i < fileUris.size(); i++)
+				p.addImage(fileUris.get(i).getPath());
+			Intent resultIntent = new Intent();
+			setResult(Activity.RESULT_OK, resultIntent);
+			resultIntent.putExtra("post", p);
+			finish();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+		//return super.onOptionsItemSelected(item);
 	}
 
 	private boolean isDeviceSupportCamera() {

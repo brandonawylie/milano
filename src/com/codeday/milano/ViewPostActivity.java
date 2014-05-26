@@ -1,4 +1,4 @@
-package com.example.milano;
+package com.codeday.milano;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
@@ -11,10 +11,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -30,7 +31,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ViewPostActivity extends Activity {
+import com.example.milano.R;
+
+public class ViewPostActivity extends ActionBarActivity {
 	Post post;
 
 	// Hold a reference to the current animator,
@@ -46,8 +49,6 @@ public class ViewPostActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_post);
-		
-		
 
 		Bundle extras = getIntent().getExtras();
 		post = (Post) extras.getSerializable("post");
@@ -67,14 +68,13 @@ public class ViewPostActivity extends Activity {
 			final Bitmap bitmap = getbitpam(uri);
 			ib.setImageBitmap(bitmap);
 			images.addView(ib);
-			
+
 			ib.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
-					zoomImageFromThumb(ib,
-							bitmap);
-					
+					zoomImageFromThumb(ib, bitmap);
+
 				}
 			});
 		}
@@ -85,10 +85,10 @@ public class ViewPostActivity extends Activity {
 			images.addView(tv);
 			tv.setGravity(Gravity.CENTER);
 		}
-		
-		ImageView iv = (ImageView)findViewById(R.id.post_star);
+
+		ImageView iv = (ImageView) findViewById(R.id.post_star);
 		iv.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				post.starred = !post.starred;
@@ -100,7 +100,7 @@ public class ViewPostActivity extends Activity {
 					ImageView iv = (ImageView) v;
 					iv.setImageResource(R.drawable.unstarred);
 				}
-				
+
 			}
 		});
 		if (post.starred) {
@@ -109,29 +109,32 @@ public class ViewPostActivity extends Activity {
 			iv.setImageResource(R.drawable.unstarred);
 		}
 	}
-	
-	public Bitmap getbitpam(String path){
-	    Bitmap imgthumBitmap=null;
-	     try    
-	     {
 
-	         final int THUMBNAIL_SIZE = 256;
+	public Bitmap getbitpam(String path) {
+		Bitmap imgthumBitmap = null;
+		try {
 
-	         FileInputStream fis = new FileInputStream(path);
-	          imgthumBitmap = BitmapFactory.decodeStream(fis);
+			final int THUMBNAIL_SIZE = 256;
 
-	         imgthumBitmap = Bitmap.createScaledBitmap(imgthumBitmap,
-	                THUMBNAIL_SIZE, THUMBNAIL_SIZE, false);
+			FileInputStream fis = new FileInputStream(path);
+			imgthumBitmap = BitmapFactory.decodeStream(fis);
 
-	        ByteArrayOutputStream bytearroutstream = new ByteArrayOutputStream(); 
-	        imgthumBitmap.compress(Bitmap.CompressFormat.JPEG, 100,bytearroutstream);
+			Matrix matrix = new Matrix();
+			matrix.postRotate(90);
+			imgthumBitmap = Bitmap.createScaledBitmap(imgthumBitmap, THUMBNAIL_SIZE,
+					THUMBNAIL_SIZE, false);
+			imgthumBitmap = Bitmap.createBitmap(imgthumBitmap, 0, 0,
+					imgthumBitmap.getWidth(), imgthumBitmap.getHeight(),
+					matrix, true);
 
+			ByteArrayOutputStream bytearroutstream = new ByteArrayOutputStream();
+			imgthumBitmap.compress(Bitmap.CompressFormat.JPEG, 100,
+					bytearroutstream);
 
-	     }
-	     catch(Exception ex) {
+		} catch (Exception ex) {
 
-	     }
-	     return imgthumBitmap;
+		}
+		return imgthumBitmap;
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -148,11 +151,13 @@ public class ViewPostActivity extends Activity {
 					.show();
 			Intent sendIntent = new Intent(Intent.ACTION_SEND);
 			sendIntent.setType("text/plain");
-			
-			//sendIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"john@gmail.com"});
-			sendIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{post.getEmail()});
+
+			// sendIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new
+			// String[]{"john@gmail.com"});
+			sendIntent.putExtra(android.content.Intent.EXTRA_EMAIL,
+					new String[] { post.getEmail() });
 			startActivity(Intent.createChooser(sendIntent, "Email:"));
-			 
+
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -295,16 +300,16 @@ public class ViewPostActivity extends Activity {
 			}
 		});
 	}
-	
-	public boolean onKeyDown(int keyCode, KeyEvent event)  {
-	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
 			Intent resultIntent = new Intent();
 			setResult(Activity.RESULT_OK, resultIntent);
 			resultIntent.putExtra("post", post);
 			finish();
-	        return true;
-	    }
+			return true;
+		}
 
-	    return super.onKeyDown(keyCode, event);
+		return super.onKeyDown(keyCode, event);
 	}
 }
