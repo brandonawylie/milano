@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">milano</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_view_post">View a Post</string>
+    <string name="title_activity_create_post">Create a Post</string>
+    <string name="title_activity_favorites">View Favorites</string>
+    <string name="stardescription">Star</string>
+    <string name="title">Enter a title</string>
+	<string name="location">Enter a location</string>
+	<string name="price">Enter a price</string>
+	<string name="date">Posted .. ago</string>
+	<string name="description">Enter a description</string>
+	<string name="category">category</string>
+	<string name="email">hunterjones@netzero.net</string>
+</resources>

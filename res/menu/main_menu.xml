@@ -1,0 +1,31 @@
+<!-- <?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" 
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/main_post"
+        android:orderInCategory="100"
+        android:showAsAction="always|withText"
+        android:title="create post"/>
+
+    <item
+        android:id="@+id/main_favorites"
+        android:orderInCategory="100"
+        android:showAsAction="always|withText"
+        android:title="favorites"/>
+
+</menu>-->
+  <menu xmlns:android="http://schemas.android.com/apk/res/android" 
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+      <item android:id="@+id/main_post"
+          
+          android:title="post"
+          app:showAsAction="always|withText"  />
+      <!--  android:icon="@drawable/abc_ic_go" -->
+      <item android:id="@+id/main_favorites"
+          
+          android:title="favorites" 
+          app:showAsAction="always|withText"/>
+      <!-- android:icon="@drawable/starred" -->
+</menu>
+   
