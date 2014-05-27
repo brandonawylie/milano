@@ -17,7 +17,7 @@ import android.widget.RelativeLayout;
 
 public class FavoritesActivity extends Activity {
 	ArrayList<Post> favorites;
-
+	PostAdapter adapter;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -37,33 +37,50 @@ public class FavoritesActivity extends Activity {
 		}
 
 		ListView list = (ListView) findViewById(R.id.favorites_list);
-		list.setAdapter(new PostAdapter(this, favorites));
+		adapter = new PostAdapter(this, favorites);
+		list.setAdapter(adapter);
 		list.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				Log.v("MAIN", "clicked button");
-				for (int i = 0; i < favorites.size(); i++) {
-					Post cur = favorites.get(i);
-					if (!cur.starred) {
-						favorites.remove(cur);
-					}
-				}
-				Intent i = new Intent(getApplicationContext(), ViewPostActivity.class);
+				Intent i = new Intent(getApplicationContext(),
+						ViewPostActivity.class);
 				i.putExtra("post", favorites.get(position));
-				startActivity(i);
+				startActivityForResult(i, MainActivity.VIEW_POST_REQUEST);
 			}
 		});
 	}
-	
-	public boolean onKeyDown(int keyCode, KeyEvent event)  {
-	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+//			for (int i = 0; i < adapter.values.size(); i++) {
+//				Post cur = adapter.values.get(i);
+//				if (!cur.starred) {
+//					adapter.values.remove(cur);
+//				}
+//			}
 			Intent resultIntent = new Intent();
 			setResult(Activity.RESULT_OK, resultIntent);
-			resultIntent.putExtra("posts", favorites);
+			resultIntent.putExtra("posts", adapter.values);
 			finish();
-	        return true;
-	    }
+			return true;
+		}
 
-	    return super.onKeyDown(keyCode, event);
+		return super.onKeyDown(keyCode, event);
+	}
+
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == MainActivity.VIEW_POST_REQUEST) {
+			// Make sure the request was successful
+			if (resultCode == RESULT_OK) {
+				Post post = (Post) data.getExtras().getSerializable("post");
+				for (int i = 0; i < adapter.values.size(); i++) {
+					if (adapter.values.get(i).equals(post))
+						adapter.values.get(i).starred = post.starred;
+				}
+				adapter.notifyDataSetChanged();
+				// TODO: Reload list view
+			}
+		}
 	}
 }

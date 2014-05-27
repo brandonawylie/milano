@@ -119,6 +119,7 @@ public class MainActivity extends ActionBarActivity {
 		} else if (requestCode == FAVORITES_REQUEST) {
 			// Make sure the request was successful
 			if (resultCode == RESULT_OK) {
+				@SuppressWarnings("unchecked")
 				ArrayList<Post> favorites = (ArrayList<Post>) data.getExtras()
 						.getSerializable("posts");
 				for (int i = 0; i < adapter.values.size(); i++) {
