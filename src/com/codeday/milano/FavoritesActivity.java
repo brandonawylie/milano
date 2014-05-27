@@ -79,7 +79,6 @@ public class FavoritesActivity extends Activity {
 						adapter.values.get(i).starred = post.starred;
 				}
 				adapter.notifyDataSetChanged();
-				// TODO: Reload list view
 			}
 		}
 	}
